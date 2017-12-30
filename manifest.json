@@ -1,12 +1,13 @@
 {
   "manifest_version": 2,
-  "name": "Navigation Stats",
+  "name": "Chaturbate Manager",
+  "author":"magicznyadrian",
   "version": "0.1.0",
   "browser_action": {
     "default_icon": {
       "32": "icons/icon-32.png"
     },
-    "default_title": "Navigation Stats",
+    "default_title": "Chaturbate Manager",
     "default_popup": "popup.html"
   },
   "permissions": [

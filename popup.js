@@ -1,14 +1,10 @@
 /* initialise variables */
-
-
-
-var noteContainer = document.querySelector('.note-container');
+var favContainer = document.querySelector('.fav-container');
 var clearBtn = document.querySelector('.clear');
 var addBtn = document.querySelector('.add');
 
 /*  add event listeners to buttons */
-
-addBtn.addEventListener('click', addNote);
+addBtn.addEventListener('click', addFav);
 clearBtn.addEventListener('click', clearAll);
 
 /* generic error handler */
@@ -16,7 +12,7 @@ function onError(error) {
   console.log(error);
 }
 
-/* display previously-saved stored notes on startup */
+/* display psaved note on start */
 
 initialize();
 
@@ -28,62 +24,54 @@ function initialize() {
     var noteKeys = Object.keys(results);
     for (let noteKey of noteKeys) {
       var curValue = results[noteKey];
-      displayNote(noteKey,curValue);
+      displayFav(noteKey,curValue);
     }
   }, onError);
 }
 
-/* Add a note to the display, and storage */
+/* Add a fav to the display, and storage */
 
-function addNote() {
+function addFav() {
 
-
-function logTabs(tabs) {
-    let tab = tabs[0]; 
-var link=tab.url;
-
-var name = link.substr(23);
-  name = name.slice(0, -1);
-
-if(name !== '') {
-      storeNote(name,"dad");
-    }
-
-}
-
-function onError(err){
-    console.error(err);
-}
-
+	function logTabs(tabs) {
+    	let tab = tabs[0]; 
+		var link=tab.url;
+		var name = link.substr(23);
+ 		name = name.slice(0, -1);
+			if(name !== ''){
+    		storeFav(name,"");
+    		}
+	}
+	function onError(err){
+  		console.error(err);
+	}
 browser.tabs.query({currentWindow: true, active: true}).then(logTabs, onError);
-
 }
 
-/* function to store a new note in storage */
+/* function to store  */
 
-function storeNote(title, body) {
+function storeFav(title, body) {
   var storingNote = browser.storage.local.set({ [title] : body });
-
-  storingNote.then(() => {
-    displayNote(title,body);
-  }, onError);
+ 	 storingNote.then(() => {
+  	  displayFav(title,body);
+  	}, onError);
 }
 
-/* function to display a note in the note box */
+/* function to display in box */
 
-function displayNote(title, body) {
-  /* create note display box */
-  var note = document.createElement('div');
+function displayFav(title, body) {
+  /* create display box */
+  var fav = document.createElement('div');
 
-  var noteDisplay = document.createElement('div');
-  noteDisplay.className = 'display';
-  var noteH = document.createElement('iframe');
+  var favDisplay = document.createElement('div');
+  favDisplay.className = 'display';
+  var favH = document.createElement('iframe');
   
   var clearFix = document.createElement('div');
 
 
-  note.setAttribute('class','note');  
-  noteH.src = "http://projectw.c0.pl/parser/test.php?name=" +title;
+  fav.setAttribute('class','note');  
+  favH.src = "http://projectw.c0.pl/parser/test.php?name=" +title;
 
 
   var deleteBtn = document.createElement('button');
@@ -93,24 +81,19 @@ function displayNote(title, body) {
   fapBtn.textContent="Open";
  
 
-  //deleteBtn.setAttribute('class','delete');
   
   clearFix.setAttribute('class','clearfix');
-  noteDisplay.appendChild(noteH);
+  favDisplay.appendChild(favH);
+
+  favDisplay.appendChild(fapBtn);
+  favDisplay.appendChild(deleteBtn);
 
 
-  noteDisplay.appendChild(fapBtn);
-  noteDisplay.appendChild(deleteBtn);
+  fav.appendChild(favDisplay);
+  favDisplay.appendChild(clearFix);
 
-
-  note.appendChild(noteDisplay);
-  noteDisplay.appendChild(clearFix);
-
-
-
-
-  note.appendChild(noteDisplay);
-  noteContainer.appendChild(note);
+  fav.appendChild(favDisplay);
+  favContainer.appendChild(fav);
 
     deleteBtn.addEventListener('click',(e) => {
     const evtTgt = e.target;
@@ -127,8 +110,8 @@ browser.tabs.create({
 
 }
 function clearAll() {
-  while (noteContainer.firstChild) {
-      noteContainer.removeChild(noteContainer.firstChild);
+  while (favContainer.firstChild) {
+      favContainer.removeChild(favContainer.firstChild);
   }
   browser.storage.local.clear();
 }

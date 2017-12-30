@@ -24,8 +24,13 @@ body {
   }
 
 
-
 /* Typography */
+iframe {  
+
+    border: 0px ;
+    height: 77px;
+    width: 180px;
+}
 
 h2 {
   text-align: center;
@@ -33,10 +38,10 @@ h2 {
 }
 .display{
     
-    padding: 2px;
-    border-bottom: 6px solid red;
-   background-color: lightgrey;
-   border-radius: 20px;
+  padding: 2px;
+  border-bottom: 6px solid red;
+  background-color: lightgrey;
+  border-radius: 20px;
 
 
 }
